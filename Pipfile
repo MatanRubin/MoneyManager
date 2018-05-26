@@ -11,6 +11,8 @@ django-filter = "*"
 djangorestframework = "*"
 markdown = "*"
 django = "*"
+black = "*"
+pre-commit = "*"
 
 [dev-packages]
 
