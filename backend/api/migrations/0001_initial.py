@@ -7,31 +7,46 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ImportMetadata',
+            name="ImportMetadata",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('import_id', models.IntegerField()),
-                ('user_id', models.IntegerField()),
-                ('num_txns', models.IntegerField(default=0)),
-                ('source', models.CharField(max_length=200)),
-                ('datetime', models.DateTimeField(verbose_name='Import date and time')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("import_id", models.IntegerField()),
+                ("user_id", models.IntegerField()),
+                ("num_txns", models.IntegerField(default=0)),
+                ("source", models.CharField(max_length=200)),
+                ("datetime", models.DateTimeField(verbose_name="Import date and time")),
             ],
         ),
         migrations.CreateModel(
-            name='RawTxn',
+            name="RawTxn",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.FloatField()),
-                ('external_id', models.CharField(max_length=200)),
-                ('description', models.CharField(max_length=200)),
-                ('sum', models.FloatField(default=0)),
-                ('date', models.DateField(verbose_name='Transaction Date')),
-                ('raw_txn_id', models.IntegerField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("balance", models.FloatField()),
+                ("external_id", models.CharField(max_length=200)),
+                ("description", models.CharField(max_length=200)),
+                ("sum", models.FloatField(default=0)),
+                ("date", models.DateField(verbose_name="Transaction Date")),
+                ("raw_txn_id", models.IntegerField()),
             ],
         ),
     ]
