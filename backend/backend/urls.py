@@ -45,6 +45,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("api-auth/", include("rest_framework.urls")),
-    url(r"^", include(router.urls)),
-    url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("", include(router.urls)),
 ]

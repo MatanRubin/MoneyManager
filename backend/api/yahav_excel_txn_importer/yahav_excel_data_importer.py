@@ -9,21 +9,17 @@ from pendulum import UTC
 class ImportMetadata:
 
     def __init__(
-        self,
-        import_id: int,
-        datetime: pendulum.DateTime,
-        source: str,
-        num_txns: int,
-        user_id: int,
+        self, datetime: pendulum.DateTime, source: str, num_txns: int, user_id: int
     ):
         self.user_id = user_id
         self.num_txns = num_txns
         self.source = source
         self.datetime = datetime
-        self.import_id = import_id
 
     def __repr__(self) -> str:
-        return f"ImportMetadata(import_id={self.import_id}, date={self.datetime}, " f"source={self.source}, num_txns={self.num_txns}, user_id={self.user_id}"
+        return (
+            f"ImportMetadata(date={self.datetime}, source={self.source}, num_txns={self.num_txns}, user_id={self.user_id}"
+        )
 
 
 class RawTxn:
@@ -41,10 +37,11 @@ class RawTxn:
         self.description = description
         self.sum = sum
         self.date = date
-        self.raw_txn_id = None
 
     def __repr__(self):
-        return f"RawTxn(date={self.date}, sum={self.sum}, description={self.description}, " f"external_id={self.external_id} balance={self.balance}"
+        return (
+            f"RawTxn(date={self.date}, sum={self.sum}, description={self.description}, external_id={self.external_id} balance={self.balance}"
+        )
 
 
 def import_excel_file(input_path: str) -> (ImportMetadata, List[RawTxn]):
@@ -68,9 +65,7 @@ def import_excel_file(input_path: str) -> (ImportMetadata, List[RawTxn]):
                 row.balance,
             )
         )
-    import_metadata = ImportMetadata(
-        None, pendulum.now(UTC), input_path, len(txns), None
-    )
+    import_metadata = ImportMetadata(pendulum.now(UTC), input_path, len(txns), None)
     return import_metadata, txns
 
 
