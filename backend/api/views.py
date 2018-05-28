@@ -2,9 +2,10 @@ from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .models import RawTxn
-from .serializers import RawTxnSerializer
-from .yahav_excel_txn_importer.yahav_excel_data_importer import import_excel_file
+from .serializers import RawTxnSerializer, ImportMetadataSerializer
+from .yahav_excel_data_importer import import_excel_file
 
 
 def index(request):
@@ -33,19 +34,9 @@ def txn_details(request, txn_id, format=None):
 # TODO make this a POST and get an actual file
 @api_view(["GET"])
 def import_excel(request, format=None):
-    import_metadata, txns = import_excel_file("/Users/maloni/Downloads/yahav.xls")
-    raw_txns = [
-        RawTxn(
-            balance=x.balance,
-            external_id=x.external_id,
-            description=x.description,
-            sum=x.sum,
-            date=x.date,
-        )
-        for x in txns
-    ]
+    import_metadata, raw_txns = import_excel_file("/Users/maloni/Downloads/yahav.xls")
     for raw_txn in raw_txns:
         raw_txn.save()
-    # TODO persist import_metadata
-    serializer = RawTxnSerializer(raw_txns, many=True)
+    import_metadata.save()
+    serializer = ImportMetadataSerializer(import_metadata)
     return Response(serializer.data, status=status.HTTP_201_CREATED)

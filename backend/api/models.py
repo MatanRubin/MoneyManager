@@ -15,12 +15,11 @@ class RawTxn(models.Model):
 
 
 class ImportMetadata(models.Model):
-    user_id = models.IntegerField()
     num_txns = models.IntegerField(default=0)
     source = models.CharField(max_length=200)
-    datetime = models.DateTimeField("Import date and time")
+    datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return (
-            f"ImportMetadata(id={self.id}, date={self.datetime}, source={self.source}, num_txns={self.num_txns}, user_id={self.user_id})"
+            f"ImportMetadata(id={self.id}, date={self.datetime}, source={self.source}, num_txns={self.num_txns})"
         )
