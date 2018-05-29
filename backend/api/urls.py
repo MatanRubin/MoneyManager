@@ -5,7 +5,6 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.index, name="index"),
     path("transactions", views.list_txns),
     path("transactions/<int:pk>", views.txn_details),
     path("commands/import", views.import_excel),

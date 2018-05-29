@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render_to_response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -6,10 +7,6 @@ from rest_framework.response import Response
 from .models import RawTxn
 from .serializers import RawTxnSerializer, ImportMetadataSerializer
 from .yahav_excel_data_importer import import_excel_file
-
-
-def index(request):
-    return HttpResponse("Hello, world!")
 
 
 @api_view(["GET"])
