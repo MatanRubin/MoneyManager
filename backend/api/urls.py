@@ -5,9 +5,11 @@ from . import views
 
 
 urlpatterns = [
-    path("transactions", views.list_txns),
-    path("transactions/<int:pk>", views.txn_details),
-    path("commands/import", views.import_excel),
+    path("", views.api_root),
+    path("transactions", views.list_txns, name="transaction-list"),
+    path("transactions/<int:pk>", views.txn_details, name="transaction-detail"),
+    path("commands/import", views.import_excel, name="import"),
+    path("imports", views.import_list, name="import-list"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

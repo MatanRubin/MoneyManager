@@ -14,6 +14,11 @@ class RawTxn(models.Model):
         )
 
 
+class Txn(models.Model):
+    raw_txn = models.OneToOneField(RawTxn, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=1000, blank=True)
+
+
 class ImportMetadata(models.Model):
     num_txns = models.IntegerField(default=0)
     source = models.CharField(max_length=200)

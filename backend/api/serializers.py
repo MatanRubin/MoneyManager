@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import RawTxn, ImportMetadata
+from .models import RawTxn, ImportMetadata, Txn
 
 
-class RawTxnSerializer(serializers.ModelSerializer):
+class RawTxnSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         return RawTxn.objects.create(**validated_data)
@@ -12,7 +12,19 @@ class RawTxnSerializer(serializers.ModelSerializer):
         fields = ("id", "balance", "external_id", "description", "sum", "date")
 
 
-class ImportMetadataSerializer(serializers.ModelSerializer):
+class TxnSerializer(serializers.HyperlinkedModelSerializer):
+
+    raw_txn = RawTxnSerializer(read_only=True)
+
+    def create(self, validated_data):
+        return Txn.objects.create(**validated_data)
+
+    class Meta:
+        model = Txn
+        fields = ("id", "raw_txn", "comment")
+
+
+class ImportMetadataSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         return ImportMetadata.objects.create(**validated_data)
