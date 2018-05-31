@@ -1,27 +1,52 @@
 from rest_framework import serializers
+from rest_framework.relations import HyperlinkedRelatedField
+
 from .models import RawTxn, ImportMetadata, Txn
 
 
 class RawTxnSerializer(serializers.HyperlinkedModelSerializer):
+
+    import_metadata = HyperlinkedRelatedField(
+        read_only=True, view_name="import-metadata-detail"
+    )
 
     def create(self, validated_data):
         return RawTxn.objects.create(**validated_data)
 
     class Meta:
         model = RawTxn
-        fields = ("id", "balance", "external_id", "description", "sum", "date")
+        fields = (
+            "id",
+            "import_metadata",
+            "balance",
+            "external_id",
+            "description",
+            "sum",
+            "date",
+        )
 
 
-class TxnSerializer(serializers.HyperlinkedModelSerializer):
+class TxnSerializer(serializers.ModelSerializer):
 
-    raw_txn = RawTxnSerializer(read_only=True)
+    raw_txn = HyperlinkedRelatedField(
+        read_only=True, view_name="raw-transaction-detail"
+    )
 
     def create(self, validated_data):
         return Txn.objects.create(**validated_data)
 
     class Meta:
         model = Txn
-        fields = ("id", "raw_txn", "comment")
+        fields = (
+            "id",
+            "raw_txn",
+            "balance",
+            "external_id",
+            "description",
+            "sum",
+            "date",
+            "comment",
+        )
 
 
 class ImportMetadataSerializer(serializers.HyperlinkedModelSerializer):

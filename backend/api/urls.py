@@ -6,10 +6,21 @@ from . import views
 
 urlpatterns = [
     path("", views.api_root),
-    path("transactions", views.list_txns, name="transaction-list"),
-    path("transactions/<int:pk>", views.txn_details, name="transaction-detail"),
-    path("commands/import", views.import_excel, name="import"),
-    path("imports", views.import_list, name="import-list"),
+    path("transactions", views.TxnList.as_view(), name="transaction-list"),
+    path(
+        "transactions/<int:pk>", views.TxnDetails.as_view(), name="transaction-detail"
+    ),
+    path(
+        "raw-transactions/<int:pk>",
+        views.RawTxnDetails.as_view(),
+        name="raw-transaction-detail",
+    ),
+    path("imports", views.ImportMetadataList.as_view(), name="import-list"),
+    path(
+        "imports/<int:pk>",
+        views.ImportMetadataDetails.as_view(),
+        name="import-metadata-detail",
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
