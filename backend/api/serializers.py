@@ -51,9 +51,11 @@ class TxnSerializer(serializers.ModelSerializer):
 
 class ImportMetadataSerializer(serializers.HyperlinkedModelSerializer):
 
+    file = serializers.FileField(max_length=None, use_url=True)
+
     def create(self, validated_data):
         return ImportMetadata.objects.create(**validated_data)
 
     class Meta:
         model = ImportMetadata
-        fields = ("num_txns", "source", "datetime")
+        fields = ("num_txns", "source", "datetime", "file")

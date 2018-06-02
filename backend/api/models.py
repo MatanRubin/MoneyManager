@@ -5,6 +5,7 @@ class ImportMetadata(models.Model):
     num_txns = models.IntegerField(default=0)
     source = models.CharField(max_length=200)
     datetime = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(upload_to="imports", default="imports/None.xls")
 
     def __str__(self):
         return (

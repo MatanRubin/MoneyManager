@@ -41,24 +41,24 @@ class ImportMetadataViewSet(viewsets.ModelViewSet):
     queryset = ImportMetadata.objects.all()
     serializer_class = ImportMetadataSerializer
 
-    def create(self, request, *args, **kwargs):
-        # serializer.save(owner=self.request.user)
-        import_metadata, raw_txns = import_excel_file(
-            "/Users/maloni/Downloads/yahav.xls"
-        )
-        import_metadata.save()
-        for raw_txn in raw_txns:
-            raw_txn.import_metadata = import_metadata
-            raw_txn.save()
-            txn = Txn(
-                raw_txn=raw_txn,
-                balance=raw_txn.balance,
-                external_id=raw_txn.external_id,
-                description=raw_txn.description,
-                sum=raw_txn.sum,
-                date=raw_txn.date,
-                comment="",
-            )
-            txn.save()
-        new_serializer = ImportMetadataSerializer(import_metadata)
-        return Response(new_serializer.data, status=status.HTTP_201_CREATED)
+    # def create(self, request, *args, **kwargs):
+    #     # serializer.save(owner=self.request.user)
+    #     import_metadata, raw_txns = import_excel_file(
+    #         "/Users/maloni/Downloads/yahav.xls"
+    #     )
+    #     import_metadata.save()
+    #     for raw_txn in raw_txns:
+    #         raw_txn.import_metadata = import_metadata
+    #         raw_txn.save()
+    #         txn = Txn(
+    #             raw_txn=raw_txn,
+    #             balance=raw_txn.balance,
+    #             external_id=raw_txn.external_id,
+    #             description=raw_txn.description,
+    #             sum=raw_txn.sum,
+    #             date=raw_txn.date,
+    #             comment="",
+    #         )
+    #         txn.save()
+    #     new_serializer = ImportMetadataSerializer(import_metadata)
+    #     return Response(new_serializer.data, status=status.HTTP_201_CREATED)
