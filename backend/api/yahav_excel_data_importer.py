@@ -1,13 +1,12 @@
 # coding=utf-8
 from typing import List
 import pandas as pd
-import pendulum
 
 from .models import RawTxn, ImportMetadata
 
 
-def import_excel_file(input_path: str) -> (ImportMetadata, List[RawTxn]):
-    xl = pd.ExcelFile(input_path)
+def import_excel_file(input_file) -> (ImportMetadata, List[RawTxn]):
+    xl = pd.ExcelFile(input_file)
     data_frame = xl.parse(
         'תנועות עו"ש',
         header=5,
@@ -27,5 +26,7 @@ def import_excel_file(input_path: str) -> (ImportMetadata, List[RawTxn]):
                 date=row["date"],
             )
         )
-    import_metadata = ImportMetadata(num_txns=len(txns), source=input_path)
+    import_metadata = ImportMetadata(
+        num_txns=len(txns), source=input_file, file=input_file
+    )
     return import_metadata, txns

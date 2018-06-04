@@ -59,3 +59,4 @@ class ImportMetadataSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ImportMetadata
         fields = ("num_txns", "source", "datetime", "file")
+        read_only_fields = ("num_txns", "source")
